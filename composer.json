@@ -1,13 +1,14 @@
 {
-    "name": "apereo/phpcas",
+    "name": "daxslab",
     "description": "Provides a simple API for authenticating users against a CAS server",
-    "keywords": ["cas", "jasig", "apereo"],
-    "homepage": "https://wiki.jasig.org/display/CASC/phpCAS",
+    "keywords": ["cas", "jasig", "apereo", "daxslab"],
+    "homepage": "https://github.com/daxslab/phpCAS",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
         {"name": "Joachim Fritschi", "homepage": "https://wiki.jasig.org/display/~fritschi"},
-        {"name": "Adam Franco", "homepage": "https://wiki.jasig.org/display/~adamfranco"}
+        {"name": "Adam Franco", "homepage": "https://wiki.jasig.org/display/~adamfranco"},
+        {"name": "Daxslab", "homepage": "https://daxslab.com"}
     ],
     "require": {
         "php": ">=5.4.0",
@@ -26,11 +27,6 @@
     "autoload-dev": {
         "psr-4": {
             "PhpCas\\": "test/CAS/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.3.x-dev"
         }
     }
 }
