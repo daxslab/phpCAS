@@ -332,6 +332,7 @@ class phpCAS
      * @param string $server_uri      the URI the CAS server is responding on
      * @param bool   $changeSessionID Allow phpCAS to change the session_id (Single
      * Sign Out/handleLogoutRequests is based on that change)
+     * @param string $server_protocol The protocol of the CAS server (http or https)
      *
      * @return void a newly created CAS_Client object
      * @note Only one of the phpCAS::client() and phpCAS::proxy functions should be
@@ -339,7 +340,7 @@ class phpCAS
      * and phpCAS::setDebug()).
      */
     public static function client($server_version, $server_hostname,
-        $server_port, $server_uri, $changeSessionID = true
+        $server_port, $server_uri, $changeSessionID = true, $server_protocol = 'https'
     ) {
         phpCAS :: traceBegin();
         if (is_object(self::$_PHPCAS_CLIENT)) {
@@ -359,7 +360,7 @@ class phpCAS
         try {
             self::$_PHPCAS_CLIENT = new CAS_Client(
                 $server_version, false, $server_hostname, $server_port, $server_uri,
-                $changeSessionID
+                $changeSessionID, $server_protocol
             );
         } catch (Exception $e) {
             phpCAS :: error(get_class($e) . ': ' . $e->getMessage());
@@ -376,6 +377,7 @@ class phpCAS
      * @param string $server_uri      the URI the CAS server is responding on
      * @param bool   $changeSessionID Allow phpCAS to change the session_id (Single
      * Sign Out/handleLogoutRequests is based on that change)
+     * @param string $server_protocol The protocol of the CAS server (http or https)
      *
      * @return void a newly created CAS_Client object
      * @note Only one of the phpCAS::client() and phpCAS::proxy functions should be
@@ -383,7 +385,7 @@ class phpCAS
      * and phpCAS::setDebug()).
      */
     public static function proxy($server_version, $server_hostname,
-        $server_port, $server_uri, $changeSessionID = true
+        $server_port, $server_uri, $changeSessionID = true, $server_protocol = 'https'
     ) {
         phpCAS :: traceBegin();
         if (is_object(self::$_PHPCAS_CLIENT)) {
@@ -403,7 +405,7 @@ class phpCAS
         try {
             self::$_PHPCAS_CLIENT = new CAS_Client(
                 $server_version, true, $server_hostname, $server_port, $server_uri,
-                $changeSessionID
+                $changeSessionID, $server_protocol
             );
         } catch (Exception $e) {
             phpCAS :: error(get_class($e) . ': ' . $e->getMessage());

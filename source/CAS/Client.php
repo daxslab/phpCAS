@@ -265,7 +265,9 @@ class CAS_Client
         'version' => '',
         'hostname' => 'none',
         'port' => -1,
-        'uri' => 'none');
+        'uri' => 'none',
+        'protocol' => ''
+    );
 
     /**
      * This method is used to retrieve the version of the CAS server.
@@ -298,6 +300,16 @@ class CAS_Client
     }
 
     /**
+     * This method is used to retrieve the protocol of the CAS server.
+     *
+     * @return string the protocol of the CAS server.
+     */
+    private function _getServerProtocol()
+    {
+        return $this->_server['protocol'];
+    }
+
+    /**
      * This method is used to retrieve the URI of the CAS server.
      *
      * @return string a URI.
@@ -316,7 +328,7 @@ class CAS_Client
     {
         // the URL is build only when needed
         if ( empty($this->_server['base_url']) ) {
-            $this->_server['base_url'] = 'https://' . $this->_getServerHostname();
+            $this->_server['base_url'] = $this->_getServerProtocol() . '://' . $this->_getServerHostname();
             if ($this->_getServerPort()!=443) {
                 $this->_server['base_url'] .= ':'
                 .$this->_getServerPort();
@@ -898,6 +910,8 @@ class CAS_Client
      * @param bool   $changeSessionID Allow phpCAS to change the session_id
      *                                (Single Sign Out/handleLogoutRequests
      *                                is based on that change)
+     * @param string $server_protocol The protocol of the CAS server
+     *                                (http or https)
      *
      * @return self a newly created CAS_Client object
      */
@@ -907,7 +921,8 @@ class CAS_Client
         $server_hostname,
         $server_port,
         $server_uri,
-        $changeSessionID = true
+        $changeSessionID = true,
+        $server_protocol = 'https'
     ) {
         // Argument validation
         if (gettype($server_version) != 'string')
@@ -996,6 +1011,12 @@ class CAS_Client
         if(strstr($server_uri, '?') === false) $server_uri .= '/';
         $server_uri = preg_replace('/\/\//', '/', '/'.$server_uri);
         $this->_server['uri'] = $server_uri;
+
+        // check protocol
+        if (!$server_protocol || ($server_protocol != 'http' && $server_protocol != 'https')){
+            phpCAS::error('bad CAS server protocol (`'.$server_protocol.'\')');
+        }
+        $this->_server['protocol'] = $server_protocol;
 
         // set to callback mode if PgtIou and PgtId CGI GET parameters are provided
         if ( $this->isProxy() ) {
