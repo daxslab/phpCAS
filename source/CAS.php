@@ -463,7 +463,7 @@ class phpCAS
      */
     public static function setDebug($filename = '')
     {
-        trigger_error('phpCAS::setDebug() is deprecated in favor of phpCAS::setLogger().', E_USER_DEPRECATED);
+//        trigger_error('phpCAS::setDebug() is deprecated in favor of phpCAS::setLogger().', E_USER_DEPRECATED);
 
         if ($filename != false && gettype($filename) != 'string') {
             phpCAS :: error('type mismatched for parameter $dbg (should be false or the name of the log file)');
